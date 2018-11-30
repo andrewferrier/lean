@@ -65,7 +65,7 @@ prompt_lean_git_dirty() {
     # check if we're in a git repo
     command git rev-parse --is-inside-work-tree &>/dev/null || return
     # check if it's dirty
-    local umode="-uno" #|| local umode="-unormal"
+    local umode="-unormal"
     command test -n "$(git status --porcelain --ignore-submodules ${umode} 2>/dev/null | head -100)"
 
     (($? == 0)) && echo ' +'
