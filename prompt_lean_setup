@@ -65,10 +65,15 @@ prompt_lean_git_dirty() {
     # check if we're in a git repo
     command git rev-parse --is-inside-work-tree &>/dev/null || return
     # check if it's dirty
-    local umode="-unormal"
-    command test -n "$(git status --porcelain --ignore-submodules ${umode} 2>/dev/null | head -100)"
-
-    (($? == 0)) && echo ' +'
+    GIT_OUTPUT="$(timeout 0.5s sh -c 'git status --porcelain --ignore-submodules -unormal 2>/dev/null | head -100')"
+    GIT_EXIT_CODE=$?
+    if (( $GIT_EXIT_CODE == 124 )); then
+        echo ' ?'
+    else
+        if (( ${#GIT_OUTPUT} > 0 )); then
+            echo ' +'
+        fi
+    fi
 }
 
 # displays the exec time of the last command if set threshold was exceeded
