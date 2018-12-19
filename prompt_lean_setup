@@ -64,8 +64,16 @@ prompt_lean_human_time() {
 prompt_lean_git_dirty() {
     # check if we're in a git repo
     command git rev-parse --is-inside-work-tree &>/dev/null || return
+
+    # find appropriate timeout command
+    if (command -v gtimeout >/dev/null 2>&1); then
+      TIMEOUT_COMMAND=gtimeout
+    else
+      TIMEOUT_COMMAND=timeout
+    fi
+
     # check if it's dirty
-    GIT_OUTPUT="$(timeout 0.5s sh -c 'git status --porcelain --ignore-submodules -unormal 2>/dev/null | head -100')"
+    GIT_OUTPUT="$($TIMEOUT_COMMAND 0.5s sh -c 'git status --porcelain --ignore-submodules -unormal 2>/dev/null | head -100')"
     GIT_EXIT_CODE=$?
     if (( $GIT_EXIT_CODE == 124 )); then
         echo ' ?'
