@@ -9,6 +9,8 @@ code of the process isn't 0, git integration. So I took "pure", mixed in my
 ideas of what a prompt should look like and came up with "lean" - a 1 line
 prompt that stays out of your face.
 
+![lean example gif](https://github.com/miekg/lean/blob/master/lean.gif "Example Session Using Lean")
+
 So lean is an evolution of pure, with the following changes:
 
 * Defaults to a very sparse setup, only showing information you need at the
@@ -25,7 +27,9 @@ plugin (or prior to sourcing `zgen`, etc.).
 and clean
 * Shows background jobs (in the left prompt)
 * Show (dirty) git repos
-* Shortens path if needed (longer then 70% of your screen)
+* Shortens path if needed (longer then 70% of your screen). Two methods are provided:
+'truncate' and 'shrink' (fish-style working directory). Set `PROMPT_LEAN_ABBR_METHOD`
+to choose the one you like the most (default is 'truncate').
 * Uses `PROMPT_LEAN_LEFT` and `PROMPT_LEAN_RIGHT` to allow customization of the left
   and/or right side of the prompt.
 * For a configurable insertmode indicator, set the `PROMPT_LEAN_VIMODE` and `PROMPT_LEAN_VIMODE_FORMAT`
@@ -38,14 +42,6 @@ variables.
 When lean starts, only 2 characters show on the screen '%' on the left and '~'
 on the right. All other info is omitted (like the user and system you are on),
 and shown only when needed.
-
-Here is a [screencast](https://asciinema.org/a/d1b5wccq23kglwwhaymoi8z5i)
-showing the prompt.
-*Note*: for some reason the screencast does not show the space between the '%'
-character and the start of the command line. **NOTE** This
-[issue](https://github.com/miekg/lean/issues/2) has been fixed.
-
-[![asciicast](https://asciinema.org/a/d1b5wccq23kglwwhaymoi8z5i.png)](https://asciinema.org/a/d1b5wccq23kglwwhaymoi8z5i)
 
 Installation
 ===========
